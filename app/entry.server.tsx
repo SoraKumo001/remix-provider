@@ -8,19 +8,24 @@ import type { AppLoadContext, EntryContext } from "@remix-run/cloudflare";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
+import { ServerProvider } from "remix-provider";
 
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  // This is ignored so we can keep it in the template for visibility.  Feel
-  // free to delete this parameter in your app if you're not using it!
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext
 ) {
   const body = await renderToReadableStream(
-    <RemixServer context={remixContext} url={request.url} />,
+    // Set the values you want to distribute to clients.
+    <ServerProvider
+      value={{
+        env: loadContext.cloudflare.env,
+      }}
+    >
+      <RemixServer context={remixContext} url={request.url} />
+    </ServerProvider>,
     {
       signal: request.signal,
       onError(error: unknown) {
