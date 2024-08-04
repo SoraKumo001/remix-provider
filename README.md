@@ -15,6 +15,14 @@ Provides the ability to distribute environment variables etc. to clients when us
 
 ## Sample
 
+- source code
+
+https://github.com/SoraKumo001/remix-provider
+
+- execution result
+
+https://remix-provider.pages.dev/
+
 ### entry.server.tsx
 
 ```tsx
@@ -36,6 +44,7 @@ export default async function handleRequest(
     <ServerProvider
       value={{
         env: loadContext.cloudflare.env,
+        host: request.headers.get("host"),
       }}
     >
       <RemixServer context={remixContext} url={request.url} />
@@ -117,20 +126,17 @@ export default function Index() {
 
 ### Execution Result
 
-- .dev.vars
-
-```env
-Test01=abc
-Test02=xyz
-```
-
 - Output
 
 ```json
 {
   "env": {
-    "Test01": "abc",
-    "Test02": "xyz"
-  }
+    "ASSETS": {},
+    "CF_PAGES": "1",
+    "CF_PAGES_BRANCH": "master",
+    "CF_PAGES_COMMIT_SHA": "dfc64ad01b02b6832fae2fd3a61453ac14f6fb35",
+    "CF_PAGES_URL": "https://f3f206fa.remix-provider.pages.dev"
+  },
+  "host": "remix-provider.pages.dev"
 }
 ```

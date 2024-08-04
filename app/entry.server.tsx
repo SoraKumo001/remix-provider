@@ -22,6 +22,7 @@ export default async function handleRequest(
     <ServerProvider
       value={{
         env: loadContext.cloudflare.env,
+        host: request.headers.get("host"),
       }}
     >
       <RemixServer context={remixContext} url={request.url} />
@@ -29,7 +30,6 @@ export default async function handleRequest(
     {
       signal: request.signal,
       onError(error: unknown) {
-        // Log streaming rendering errors from inside the shell
         console.error(error);
         responseStatusCode = 500;
       },

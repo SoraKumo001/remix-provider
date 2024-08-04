@@ -44,5 +44,10 @@
   },
   "engines": {
     "node": ">=20.0.0"
-  }
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/SoraKumo001/remix-provider",
+  "author": "SoraKumo <info@croud.jp>",
+  "license": "MIT"
 }
